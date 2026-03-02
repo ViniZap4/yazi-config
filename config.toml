@@ -1,0 +1,4 @@
+[programs]
+editor = "nvim"
+[flavor]
+use = "nightfly"

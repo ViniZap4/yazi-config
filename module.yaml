@@ -1,0 +1,47 @@
+name: yazi-config
+description: Yazi file manager configuration with nightfly flavor
+platforms:
+  - macos
+  - linux
+links:
+  - source: config.toml
+    target: ~/.config/yazi/config.toml
+  - source: package.toml
+    target: ~/.config/yazi/package.toml
+  - source: theme.toml
+    target: ~/.config/yazi/theme.toml
+  - source: flavors
+    target: ~/.config/yazi/flavors
+dependencies:
+  brew:
+    - yazi
+    - ffmpeg
+    - p7zip
+    - jq
+    - poppler
+    - fd
+    - ripgrep
+    - fzf
+    - zoxide
+    - imagemagick
+  apt:
+    - ffmpeg
+    - p7zip
+    - jq
+    - poppler-utils
+    - fd-find
+    - ripgrep
+    - fzf
+    - zoxide
+    - imagemagick
+  pacman:
+    - yazi
+    - ffmpeg
+    - p7zip
+    - jq
+    - poppler
+    - fd
+    - ripgrep
+    - fzf
+    - zoxide
+    - imagemagick
