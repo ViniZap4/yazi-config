@@ -45,3 +45,23 @@ dependencies:
     - fzf
     - zoxide
     - imagemagick
+  dnf:
+    - ffmpeg
+    - p7zip
+    - jq
+    - poppler-utils
+    - fd-find
+    - ripgrep
+    - fzf
+    - zoxide
+    - ImageMagick
+  zypper:
+    - ffmpeg
+    - p7zip
+    - jq
+    - poppler-utils
+    - fd
+    - ripgrep
+    - fzf
+    - zoxide
+    - ImageMagick

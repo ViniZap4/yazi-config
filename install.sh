@@ -40,14 +40,11 @@ install_deps() {
       brew install yazi ffmpeg p7zip jq poppler fd ripgrep fzf zoxide imagemagick 2>/dev/null || true
       ;;
     apt)
-      sudo apt update
-      sudo apt install -y ffmpeg p7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick 2>/dev/null || true
-      if ! command -v yazi &>/dev/null && command -v cargo &>/dev/null; then
-        cargo install --locked yazi-fm yazi-cli 2>/dev/null || true
-      fi
+      sudo apt-get update -qq
+      sudo apt-get install -y ffmpeg p7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick 2>/dev/null || true
       ;;
     pacman)
-      sudo pacman -S --noconfirm yazi ffmpeg p7zip jq poppler fd ripgrep fzf zoxide imagemagick 2>/dev/null || true
+      sudo pacman -S --noconfirm --needed yazi ffmpeg p7zip jq poppler fd ripgrep fzf zoxide imagemagick 2>/dev/null || true
       ;;
     dnf)
       sudo dnf install -y ffmpeg p7zip jq poppler-utils fd-find ripgrep fzf zoxide ImageMagick 2>/dev/null || true
@@ -58,8 +55,32 @@ install_deps() {
   esac
 }
 
+# ── Install yazi (cargo fallback for distros without packages) ────
+install_yazi() {
+  if command -v yazi &>/dev/null; then
+    echo "→ yazi already installed"
+    return
+  fi
+
+  case "$PM" in
+    brew|pacman)
+      ;; # already handled in install_deps
+    *)
+      if command -v cargo &>/dev/null; then
+        echo "→ Installing yazi via cargo..."
+        cargo install --locked yazi-fm yazi-cli 2>/dev/null || true
+      else
+        echo "→ yazi not available via $PM and cargo not found"
+        echo "  Install Rust first: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
+        echo "  Then run: cargo install --locked yazi-fm yazi-cli"
+      fi
+      ;;
+  esac
+}
+
 echo "→ Installing yazi and dependencies..."
 install_deps
+install_yazi
 
 # ── Create config directory ───────────────────────────────────────
 CONFIG_DIR="$HOME/.config/yazi"
